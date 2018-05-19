@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>首页 {$site_info.site_name|default=''}</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+    <hook name="before_head_end"/>
+</head>
+<body class="body-white">
+<include file="public@nav" dwxz = "$dwxz" areaid="$areaid" pagename="$pagename" areaname="$areaname"/>
+<div class="container">
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-3 col-xs-12">
+            <img src="__TMPL__/public/assets/images/list_left.png" width="100%" height="160px">
+        </div>
+        <div class="col-md-9 col-xs-12">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div class="bread_nav">
+                        <div style="margin-left: 20px;float: left;font-size: 16px;">{$category_name}</div>
+                        <div style="float: right;margin-right: 20px;font-size: 14px;">当前位置:科右前旗三务公开平台
+                            <switch name="dwxz">
+                                <case value="1">>>苏木乡镇</case>
+                                <case value="3">>>旗直部门</case>
+                                <case value="2">>>村级站点</case>
+                                <default>>>首页</default>
+                            </switch>
+                            >>{$category_name}</div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="">
+                    <php>
+                        $where=[
+                        'post.create_time'=>['egt',0]
+                        ];
+                        $page=[
+                            'list_rows'=>15,
+                            'next'=>'下一页',
+                            'prev'=>'上一页'
+                        ];
+                    </php>
+                    <ul class="lists">
+                    <portal:articles item="vo" where="$where" order="post.create_time DESC" page="$page"
+                                     relation="categories"
+                                     categoryIds="$cateid"
+                                     dwxz="$dwxz"
+                                     areaid="$areaid"
+                                     returnVarName="articles_data">
+
+                        <li>
+                            <a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id'],'cid'=>$cateid,'dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename))}">{$vo.post_title|msubstr=0,20,'utf-8',true}<span style="float: right;margin-right: 25px;">{$vo.create_time|date='m-d',###}</span></a>
+                        </li>
+                    </portal:articles>
+                    </ul>
+                </div>
+                <div class="row text-center">
+                    <ul class="pagination">
+                        <page/>
+                    </ul>
+                </div>
+                
+
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+    $(function(){
+        $.ajax({
+            url:"/public/portal/index/areaName"
+            ,data:{
+                "areaid":"<?php echo $areaid?>"
+            }
+            ,success:function(result){
+                $("#area_name").html(result);
+            }
+        });
+    });
+</script>
+    <include file="public@footer"/>
+</div>
+
+<include file="public@scripts"/>
+<hook name="before_body_end"/>
+</body>
+</html>

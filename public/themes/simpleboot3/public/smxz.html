@@ -1,0 +1,26 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade bs-example-modal-md" id="smxz" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header title_color">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">苏木乡镇入口</h4>
+            </div>
+            <div class="modal-body" style="overflow-y: auto;height: 350px;">
+                    <php>
+                        foreach($data_area_sm_all as $key=>$vo){
+                            if(substr_count($vo['path'],'-')==2){
+                                echo "<div class=\"form-inline title\" style=\"background-color:#f5f5f5;\"><div class=\"form-group div_left\">".(isset($vo['name']) && ($vo['name'] !== '')?$vo['name']:'')."</div><div class=\"form-group div_right\"><a class=\"more\" style=\"color: #45b1f9 !important;\" target=\"_blank\" href=\"".cmf_url('index',array('areaid'=>$vo['id'],'pagename'=>'xzsy','dwxz'=>'1'))."\">点此进入镇级页面</a></div></div><div class=\"row\" style=\"margin-left: 0px;margin-right: 0px;\">";
+                                foreach($data_area_sm_all as $key=>$item){
+                                    if($vo['id']==$item["parent_id"]){
+                                        echo "<div class=\"col-md-3 col-xs-6 text-center\"><a class=\"btn btn-a btn-xs\" style=\"width: 110px;\" target=\"_blank\" href=\"".cmf_url('index',array('areaid'=>$item['id'],'pagename'=>'cjsy','dwxz'=>'2'))."\">".(isset($item['name']) && ($item['name'] !== '')?$item['name']:'')."</a></div>";
+                                    }
+                                }
+                                echo "</div>";
+                            }
+                        }
+                    </php>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>

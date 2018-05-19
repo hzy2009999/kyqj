@@ -1,0 +1,18 @@
+<!-- 模态框（Modal） -->
+<div class="modal fade bs-example-modal-md" id="zsbm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header title_color">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">旗直部门入口</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-left: 0px;margin-right: 0px;">
+                    <foreach name="data_area_zx_all" item="vo">
+                        <div class="col-md-3 col-xs-6 text-center"><a class="btn btn-a btn-xs" style="width: 110px;" target="_blank" href="{:cmf_url('index',array('areaid'=>$vo['id'],'pagename'=>'zsbmsy','dwxz'=>'3'))}">{$vo.name|default=''}</a></div>
+                    </foreach>
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>

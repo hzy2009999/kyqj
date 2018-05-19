@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>在线留言 {$site_info.site_name|default=''}</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+    <hook name="before_head_end"/>
+</head>
+<body class="body-white">
+<include file="public@nav" dwxz = "$dwxz" areaid="$areaid" pagename="$pagename" areaname="$areaname" />
+<div class="container">
+    <div class="row" style="padding: 20px;">
+        <form class="form-horizontal js-ajax-form margin-top-20" action="{:cmf_url('index/addPost')}" method="post">
+        <div class="form-group" style="margin-top: 20px;">
+            <label for="input-xm" class="col-sm-2 col-xz-2 control-label"><span class="form-required">*</span>姓名</label>
+            <div class="col-sm-10 col-xz-10">
+                <input type="text" class="form-control" id="input-xm" name="xm">
+            </div>
+        </div>
+        <div class="form-group" style="margin-top: 20px;">
+            <label for="input-sj" class="col-sm-2 col-xz-2 control-label"><span class="form-required">*</span>留言部门</label>
+            <div class="col-sm-10 col-xz-10">
+                <select class="form-control" name="area_id" id="input-area">
+                    {$area_tree}
+                </select>
+            </div>
+        </div>
+        <div class="form-group" style="margin-top: 20px;">
+            <label for="input-sj" class="col-sm-2 col-xz-2 control-label"><span class="form-required">*</span>手机</label>
+            <div class="col-sm-10 col-xz-10">
+                <input type="text" class="form-control" id="input-sj" name="sj">
+            </div>
+        </div>
+        <div class="form-group" style="margin-top: 20px;">
+            <label for="input-content" class="col-sm-2 col-xz-2 control-label"><span class="form-required">*</span>留言内容</label>
+            <div class="col-sm-10 col-xz-10">
+                <textarea class="form-control" rows="3" id="input-content" name="content"></textarea>
+            </div>
+        </div>
+        <div class="col-sm-offset-6 col-xz-offset-6 col-sm-6 col-xz-6" style="margin-top: 20px;">
+            <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+            <a class="btn btn-info" href="{:cmf_url('index',array('areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}">{:lang('BACK')}</a>
+        </div>
+    </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $.ajax({
+            url:"/public/portal/index/areaName"
+            ,data:{
+                "areaid":"<?php echo $areaid?>"
+            }
+            ,success:function(result){
+                $("#area_name").html(result);
+            }
+        });
+    });
+</script>
+    <include file="public@footer"/>
+<!-- /container -->
+<include file="public@scripts"/>
+<script src="__TMPL__/public/assets/js/slippry.min.js"></script>
+<hook name="before_body_end"/>
+</body>
+</html>

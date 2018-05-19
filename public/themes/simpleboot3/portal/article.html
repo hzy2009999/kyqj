@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$article.post_title}</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+    <style>
+        #article_content img {
+            height: auto !important;
+            max-width: 100%;
+        }
+
+        #article_content {
+            word-wrap: break-word;
+        }
+        
+    </style>
+    <hook name="before_head_end"/>
+</head>
+<body class="body-white">
+<include file="public@nav" dwxz = "$dwxz" areaid="$areaid" pagename="$pagename" areaname="$areaname"/>
+<div class="container">
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-3 col-xs-12">
+            <div class="form-inline title_area">
+                <div class="form-group div_left">{$category_name}</div>
+                <php>$href = json_decode($href_dwgk["href"],true);</php>
+                <div class="form-group div_right"><a style="color: #fff !important;" class="更多
+s" target="_blank" href="{:cmf_url($href.action,array('id'=>$href.param.id,'dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename))}">更多
+</a></div>
+            </div>
+            <div class="row" style="margin-left: 0px;margin-right: 0px;padding-top: 20px;background-color: #ebf5fd;">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="row">
+                            <ul class="lists">
+                            <foreach name="data_dwgk" item="vo">
+                                <li><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id'],'dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename))}">{$vo.post_title|msubstr=0,20,'utf-8',true}</a></li>
+                            </foreach>
+                            </ul>
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
+        <div class="col-md-9 col-xs-12">
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div class="bread_nav">
+                        <div style="margin-left: 20px;float: left;font-size: 16px;">{$category_name}</div>
+                        <div style="float: right;margin-right: 20px;font-size: 14px;">当前位置:科右前旗三务公开平台
+                            <switch name="dwxz">
+                                <case value="1">>>苏木乡镇</case>
+                                <case value="3">>>旗直部门</case>
+                                <case value="2">>>村级站点</case>
+                                <default>>>首页</default>
+                            </switch>
+                            >>{$category_name}</div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div class="article_title">
+                        {$article.post_title}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div class="article_time">
+                        发布日期 : {:date('Y-m-d H:i',$article.published_time)}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div id="article_content">
+                        {$article.post_content}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div style="font-weight: bold;font-size: 20px;">
+                        相关附件：
+                    </div>
+                </div>
+            </div>
+            <!--调用文章的附件-->
+            <notempty name="article.more.files">
+                <foreach name="article.more.files" item="file">
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+                            <a style="color: #333333;cursor: pointer;" href=" {:cmf_get_file_download_url($file.url)}" title={$file.name}>{$file.name}</a>
+                        </div>
+                    </div>
+                </foreach>
+            </notempty>
+        </div>
+    </div>
+<script type="text/javascript">
+    $(function(){
+        $.ajax({
+            url:"/public/portal/index/areaName"
+            ,data:{
+                "areaid":"<?php echo $areaid?>"
+            }
+            ,success:function(result){
+                $("#area_name").html(result);
+            }
+        });
+    });
+</script>
+    <include file="public@footer"/>
+</div>
+
+<include file="public@scripts"/>
+<hook name="before_body_end"/>
+</body>
+</html>

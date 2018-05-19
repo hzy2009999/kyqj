@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>首页 {$site_info.site_name|default=''}</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+    <hook name="before_head_end"/>
+    <style type="text/css">
+        @media screen and (min-width: 768px) {
+            .center_img{
+                background: url(__TMPL__/public/assets/images/center_banner.png);
+                height:80px;
+                background-size: 100% 100%;
+                -moz-background-size: 100% 100%;
+            }
+        }
+        @media screen and (max-width: 768px) {
+            .center_img{
+                background: url(__TMPL__/public/assets/images/center_banner_phone.png);
+                height:40px;
+                background-size: 100% 100%;
+                -moz-background-size: 100% 100%;
+            }
+        }
+    </style>
+</head>
+<body class="body-white">
+<include file="public@nav" dwxz = "$dwxz" areaid="$areaid" pagename="$pagename" areaname="$areaname" />
+<div class="container">
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-3 col-xs-12">
+            <div class="form-inline title_area">
+                <div class="form-group div_left">党政班子</div>
+                <div class="form-group div_right"><a class="more" style="color:#fff;" target="_blank" href="{:cmf_url('portal/Article/ldbzlb',array('dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename))}">更多
+</a>
+</div>
+            </div>
+            <div class="row" style="margin-left: 0px;margin-right: 0px;padding-top: 20px;background-color: #f2f9ff;">
+                <foreach name="ldbz_list" item="vo">
+                    <div class="col-md-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-md-5 col-xs-4">
+                                <if condition="empty($vo.txdz)">
+                                    <img src="__TMPL__/public/assets/images/default-thumbnail.png" width="90px" height="74px" />
+                                    <else/>
+                                    <img src="{:cmf_get_image_preview_url($vo.txdz)}" width="90px" height="74px"/>
+                                </if>
+                            </div>
+                            <div class="col-md-7 col-xs-8" style="text-align: left;">
+                                <p style="font-size: 14px;color: #333333;font-weight: bold;">{$vo['xm']}</p>
+                                <p style="font-size: 12px;">职务:{$vo['zw']}</p>
+                                <p style="font-size: 12px;">手机:{$vo['sj']}</p>
+                                <a style="font-size: 14px;color: #0185ff;cursor: pointer;" target="_blank" href="{:cmf_url('portal/Article/ldbzxx',array('dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename,'id'=>$vo.id))}">查看详细>></a>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px;border-top: 1px solid #938d8d;margin-bottom: 20px;"></div>
+                    </div>
+                </foreach>
+            </div>
+        </div>
+        <div class="col-md-9 col-xs-12">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <if condition="empty($data_smxzgk.more.thumbnail)">
+                        <img src="__TMPL__/public/assets/images/default-thumbnail.png" width="100%" height="280" />
+                        <else/>
+                        <img src="{:cmf_get_image_preview_url($data_smxzgk.more.thumbnail)}" width="100%" height="280"/>
+                    </if>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-inline title">
+                        <div class="form-group div_left">苏木乡镇概况</div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-md-12 col-xs-12">
+                            {$data_smxzgk.post_content|cutstr_html=100}
+                            <present name="data_smxzgk.post_content">
+                                <div class="form-group div_right"><a class="mores" target="_blank" href="{:cmf_url('portal/Article/index',array('id'=>$data_smxzgk['id'],'dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename))}">查看详情</a></div>
+                            </present>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-md-12 col-xs-12">
+                    <div class="center_img"></div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 10px;">
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-inline title">
+                        <div class="form-group div_left">党务公开</div>
+                        <php>$href = json_decode($href_dwgk["href"],true);</php>
+                        <div class="form-group div_right"><a class="mores" target="_blank" href="{:cmf_url($href.action,array('id'=>$href.param.id,'dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename))}">更多
+</a></div>
+                    </div>
+                    <div class="row">
+                        <ul class="lists">
+                        <foreach name="data_dwgk" item="vo">
+                            <li><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id'],'dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename))}">{$vo.post_title|msubstr=0,20,'utf-8',true}<span style="float: right;margin-right: 25px;">{$vo.create_time|date='m-d',###}</span></a></li>
+                        </foreach>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-inline title">
+                        <div class="form-group div_left">政务公开</div>
+                        <php>$href = json_decode($href_zwgk["href"],true);</php>
+                        <div class="form-group div_right"><a class="mores" target="_blank" href="{:cmf_url($href.action,array('id'=>$href.param.id,'dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename))}">更多
+</a></div>
+                    </div>
+                    <div class="row">
+                        <ul class="lists">
+                            <foreach name="data_zwgk" item="vo">
+                                <li><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id'],'dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename))}">{$vo.post_title|msubstr=0,20,'utf-8',true}<span style="float: right;margin-right: 25px;">{$vo.create_time|date='m-d',###}</span></a></li>
+                            </foreach>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12">
+                    <div class="form-inline title">
+                        <div class="form-group div_left">办事公开</div>
+                        <php>$href = json_decode($href_bsgk["href"],true);</php>
+                        <div class="form-group div_right"><a class="mores" target="_blank" href="{:cmf_url($href.action,array('id'=>$href.param.id,'dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename))}">更多
+</a></div>
+                    </div>
+                    <div class="row">
+                        <ul class="lists">
+                            <foreach name="data_bsgk" item="vo">
+                                <li><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id'],'dwxz'=>$dwxz,'areaid'=>$areaid,'pagename'=>$pagename))}">{$vo.post_title|msubstr=0,20,'utf-8',true}<span style="float: right;margin-right: 25px;">{$vo.create_time|date='m-d',###}</span></a></li>
+                            </foreach>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $.ajax({
+            url:"/public/portal/index/areaName"
+            ,data:{
+                "areaid":"<?php echo $areaid?>"
+            }
+            ,success:function(result){
+                $("#area_name").html(result);
+            }
+        });
+    });
+</script>
+<include file="public@footer"/>
+<!-- /container -->
+<include file="public@scripts"/>
+<hook name="before_body_end"/>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>首页 {$site_info.site_name|default=''}</title>
+    <meta name="keywords" content="{$site_info.site_seo_keywords|default=''}"/>
+    <meta name="description" content="{$site_info.site_seo_description|default=''}">
+    <include file="public@head"/>
+    <hook name="before_head_end"/>
+    <style type="text/css">
+        @media screen and (min-width: 768px) {
+            .center_img{
+                background: url(__TMPL__/public/assets/images/center_banner.png);
+                height:80px;
+                background-size: 100% 100%;
+                -moz-background-size: 100% 100%;
+            }
+        }
+        @media screen and (max-width: 768px) {
+            .center_img{
+                background: url(__TMPL__/public/assets/images/center_banner_phone.png);
+                height:40px;
+                background-size: 100% 100%;
+                -moz-background-size: 100% 100%;
+            }
+        }
+    </style>
+</head>
+<body class="body-white">
+<include file="public@nav" dwxz = "$dwxz" areaid="$areaid" pagename="$pagename" />
+<div class="container">
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-6 col-xs-12">
+            <div class="form-inline title_area">
+                <div class="form-group div_left">旗直部门入口</div>
+                <div class="form-group div_right"><a class="more" data-toggle="modal" data-target="#zsbm" role="zsbm">更多</a></div>
+            </div>
+            <div class="row" style="margin-left: 0px;margin-right: 0px;">
+                <div class="col-md-12" style="background-color: #f2f9ff;">
+                    <foreach name="data_area_zx" item="vo">
+                        <div class="col-md-4 col-xs-6 text-center" style="padding-left: 10px;"><a class="btn btn-a btn-xs" target="_blank" href="{:cmf_url('index',array('areaid'=>$vo['id'],'pagename'=>'zsbmsy','dwxz'=>'3'))}" style="width: 110px;">{$vo.name|default=''}</a></div>
+                    </foreach>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <div class="form-inline title_area">
+                <div class="form-group div_left">苏木乡镇入口</div>
+                <div class="form-group div_right"><a class="more" data-toggle="modal" data-target="#smxz" role="smxz">更多</a></div>
+            </div>
+            <div class="row" style="margin-left: 0px;margin-right: 0px;">
+                <div class="col-md-12" style="background-color: #f2f9ff;">
+                    <foreach name="data_area_sm" item="vo">
+                        <div class="col-md-4 col-xs-6 text-center"><a class="btn btn-a btn-xs" onclick="smxz_click(this)" data-id="{$vo.id}" data-name="{$vo.name}" style="width: 110px;">{$vo.name|default=''}</a></div>
+                    </foreach>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-4 col-xs-12">
+            <ul id="home-slider" class="list-unstyled">
+                <noslides id="123123">
+                    <foreach name="articles" item="vo">
+                        <li>
+                            <div class="caption-wraper">
+                                <div class="caption">{$vo.post_title|msubstr=0,20,'utf-8',true}</div>
+                            </div>
+                            <if condition="empty($vo.more.thumbnail)">
+                                <a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id'],'areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}" target="_blank"><img src="__TMPL__/public/assets/images/default-thumbnail.png" width="100%" height="230" /></a>
+                                <else/>
+                                <a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id'],'areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}" target="_blank"><img src="{:cmf_get_image_preview_url($vo.more.thumbnail)}" width="100%" height="230"/></a>
+                            </if>
+                        </li>
+                    </foreach>
+                </noslides>
+            </ul>
+        </div>
+        <div class="col-md-8 col-xs-12">
+            <div class="form-inline title">
+                <div class="form-group div_left">党务公开</div>
+                <php>$href = json_decode($href_dwgk["href"],true);</php>
+                <div class="form-group div_right"><a class="mores" target="_blank" href="{:cmf_url($href.action,array('id'=>$href.param.id,'areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}">更多</a></div>
+            </div>
+            <div class="row">
+                <ul class="lists">
+                    <foreach name="data_dwgk" item="vo">
+                        <li><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id'],'areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}">{$vo.post_title|msubstr=0,20,'utf-8',true}<span style="float: right;margin-right: 25px;">{$vo.create_time|date='m-d',###}</span></a></li>
+                    </foreach>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-12 col-xs-12">
+            <div class="col-md-12 col-xs-12" style="padding-left: 0px;padding-right: 0px;">
+                <div class="row">
+                    <div class="col-md-12 col-xs-12"><div class="center_img"></div></div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12" style="padding-left: 0px;padding-right: 0px;margin-top: 20px;">
+                <div class="form-inline title">
+                    <div class="form-group div_left">政务公开</div>
+                    <php>$href = json_decode($href_zwgk["href"],true);</php>
+                    <div class="form-group div_right"><a class="mores" target="_blank" href="{:cmf_url($href.action,array('id'=>$href.param.id,'areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}">更多</a></div>
+                </div>
+                <div class="row">
+                    <ul class="lists">
+                        <foreach name="data_zwgk" item="vo">
+                            <li class="col-md-6 col-xs-12" style="padding-left: 0px;"><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id'],'areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}">{$vo.post_title|msubstr=0,20,'utf-8',true}<span style="float: right;margin-right: 25px;">{$vo.create_time|date='m-d',###}</span></a></li>
+                        </foreach>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-md-9 col-xs-12">
+            <div class="col-md-12 col-xs-12" style="padding-left: 0px;padding-right: 0px;">
+                <div class="form-inline title">
+                    <div class="form-group div_left">村务公开</div>
+                    <php>$href = json_decode($href_cwgk["href"],true);</php>
+                    <div class="form-group div_right"><a class="mores" target="_blank" href="{:cmf_url($href.action,array('id'=>$href.param.id,'areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}">更多</a></div>
+                </div>
+                <div class="row">
+                    <ul class="lists">
+                        <foreach name="data_cwgk" item="vo">
+                            <li class="col-md-6 col-xs-12" style="padding-left: 0px;"><a href="{:cmf_url('portal/Article/index',array('id'=>$vo['id'],'areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}">{$vo.post_title|msubstr=0,20,'utf-8',true}<span style="float: right;margin-right: 25px;">{$vo.create_time|date='m-d',###}</span></a></li>
+                        </foreach>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <div class="form-inline title_area">
+                <div class="form-group div_left">法律法规</div>
+                <php>$href = json_decode($href_flfg["href"],true);</php>
+                <div class="form-group div_right"><a class="more" target="_blank" href="{:cmf_url($href.action,array('id'=>$href.param.id,'areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}">更多</a></div>
+            </div>
+            <div class="row" style="margin-left: 0px;margin-right: 0px;">
+                <ul class="lists">
+                    <foreach name="data_flfg" item="vo">
+                        <li class="col-md-12 col-xs-12" style="padding-left: 0px;"><a style="line-height: 37px;" href="{:cmf_url('portal/Article/index',array('id'=>$vo['id'],'areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}">{$vo.post_title|msubstr=0,10,'utf-8',true}<span style="float: right;margin-right: 5px;">{$vo.create_time|date='m-d',###}</span></a></li>
+                    </foreach>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+    <include file="public@footer"/>
+<!-- /container -->
+<include file="public@scripts"/>
+<script src="__TMPL__/public/assets/js/slippry.min.js"></script>
+<script>
+    $(function () {
+        $("#home-slider").slippry({
+            transition: 'fade',
+            useCSS: true,
+            captions: false,
+            speed: 1000,
+            pause: 3000,
+            auto: true,
+            preload: 'visible'
+        });
+        $("#home-slider").show();
+    });
+
+    function smxz_click(obj){
+        $('#cjtc').modal('show');
+        $("#cjtc").find("#title").html("");
+        $("#cjtc").find("#content_data").html("");
+        $("#cjtc").find("#title").html($(obj).attr("data-name"));
+        $.ajax({
+            url:"/public/portal/index/cjct"
+            ,data:{
+                "areaid":$(obj).attr("data-id")
+            }
+            ,success:function(result){
+                $("#cjtc").find("#content_data").html(result);
+            }
+        });
+    }
+</script>
+<hook name="before_body_end"/>
+
+
+
+</body>
+</html>

@@ -1,0 +1,62 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('AdminCategory/index')}">分类管理</a></li>
+        <li class="active"><a>编辑分类</a></li>
+    </ul>
+    <form class="form-horizontal js-ajax-form margin-top-20" action="{:url('AdminCategory/editPost')}" method="post">
+        <div class="form-group">
+            <label for="input-name" class="col-sm-2 control-label"><span class="form-required">*</span>分类名称</label>
+            <div class="col-md-6 col-sm-10">
+                <input type="text" class="form-control" id="input-name" name="name" value="{$name}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-dwxz" class="col-sm-2 control-label"><span class="form-required">*</span>单位性质</label>
+            <div class="col-md-6 col-sm-10">
+                <label class="checkbox-inline">
+                    <php>$dwxz_checked=in_array(4,$dwxz_ids)?"checked":"";</php>
+                    <input value="4" type="checkbox" {$dwxz_checked} name="dwxz_id[]">首页
+                </label>
+                <label class="checkbox-inline">
+                    <php>$dwxz_checked=in_array(1,$dwxz_ids)?"checked":"";</php>
+                    <input value="1" type="checkbox" {$dwxz_checked} name="dwxz_id[]">中心乡镇
+                </label>
+                <label class="checkbox-inline">
+                    <php>$dwxz_checked2=in_array(2,$dwxz_ids)?"checked":"";</php>
+                    <input value="2" type="checkbox" {$dwxz_checked2} name="dwxz_id[]">乡村部门
+                </label>
+                <label class="checkbox-inline">
+                    <php>$dwxz_checked3=in_array(3,$dwxz_ids)?"checked":"";</php>
+                    <input value="3" type="checkbox" {$dwxz_checked3} name="dwxz_id[]">入驻单位
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="input-description" class="col-sm-2 control-label">描述</label>
+            <div class="col-md-6 col-sm-10">
+                <textarea class="form-control" name="description"
+                          id="input-description">{$description}</textarea>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="hidden" name="parent_id" value="0">
+                <input type="hidden" name="id" value="{$id}">
+                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">{:lang('SAVE')}
+                </button>
+                <a class="btn btn-default" href="{:url('AdminCategory/index')}">{:lang('BACK')}</a>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script>
+    $('#input-list_tpl').val("{$list_tpl|default=''}");
+    $('#input-one_tpl').val("{$one_tpl|default=''}");
+</script>
+</body>
+</html>

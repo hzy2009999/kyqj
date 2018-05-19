@@ -1,0 +1,57 @@
+<br>
+<!-- Footer ================================================== -->
+
+<div id="footer" class="row" style="height: 170px;background-color: #3f9eec;">
+    <div class="container text-center" style="margin-top: 20px;">
+        <div class="col-md-2 col-xs-12">
+            <a href="http://www.ccdi.gov.cn" style="color: #333333;" target="_blank">中央纪委国家监委</a>
+        </div>
+        <div class="col-md-2 col-xs-12">
+            <a href="http://m.nmgjjjc.gov.cn" style="color: #333333;" target="_blank">内蒙古自治区纪检监察</a>
+        </div>
+        <div class="col-md-2 col-xs-12">
+            <a href="http://xam.nmgjjjc.gov.cn/bgt/xam" style="color: #333333;" target="_blank">兴安盟纪检监察</a>
+        </div>
+        <div class="col-md-2 col-xs-12">
+            <a href="http://kyqq.nmgjjjc.gov.cn" style="color: #333333;" target="_blank">科右前旗纪检监察</a>
+        </div>
+        <div class="col-md-2 col-xs-12">
+            <a href="http://inews.nmgnews.com.cn/zt/2018qglh/" style="color: #333333;" target="_blank">科右前旗新闻</a>
+        </div>
+        <div class="col-md-2 col-xs-12">
+            <a href="http://www.kyqq.gov.cn/kyqq/index/index.html" style="color: #333333;" target="_blank">科右前旗人民政府</a>
+        </div>
+    </div>
+    <div class="container text-center" style="margin-top: 20px;">
+        <div style="width:300px;margin:0 auto; padding:20px 0;">
+        <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=15222102000007" style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"><img src="__TMPL__/public/assets/images/beian.png" style="float:left;"/><p style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; color:#000000;">蒙公网安备 15222102000007号</p></a>
+      </div>
+    </div>
+</div>
+<section class="toolbar" id="toolbar">
+  <ul class="list-unstyled">
+      <php>
+          if($dwxz!=0){
+            if(cmf_is_mobile()){
+                echo "<li class=\"toolbar-3 toolbar-items\"><a href=\"".cmf_url('/portal/index/index',array('dwxz'=>0,'areaid'=>0,'pagename'=>''))."\" target=\"_self\" class=\"blockFull\">首页</a></li>";
+                if($dwxz==1||$dwxz==2){
+                    echo "<li class=\"toolbar-3 toolbar-items\"><a data-toggle=\"modal\" data-target=\"#smxz\" role=\"smxz\" class=\"blockFull\">苏木乡镇</br>入口</a></li>";
+                }else{
+                    echo "<li class=\"toolbar-3 toolbar-items\"><a data-toggle=\"modal\" data-target=\"#zsbm\" role=\"zsbm\" class=\"blockFull\">旗直部门</br>入口</a></li>";
+                }
+            }
+          }
+      </php>
+      <li class="toolbar-3 toolbar-items" style="background-image:url(__TMPL__/public/assets/images/toolbar_03.png);">
+          <a href="{:cmf_url('/portal/index/message',array('areaid'=>$areaid,'pagename'=>$pagename,'dwxz'=>$dwxz))}" target="_blank" class="blockFull">在线留言</a>
+      </li>
+  </ul>
+</section>
+<div id="backtotop">
+    <i class="fa fa-arrow-circle-up"></i>
+</div>
+<include file="public@map"/>
+<include file="public@moreSeach"/>
+<include file="public@zsbm"/>
+<include file="public@smxz"/>
+<include file="public@cjtc"/>
